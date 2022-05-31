@@ -4,11 +4,12 @@ import {Content} from './features/content/Content'
 import ContentApi from './features/content/ContentApi'
 
 import Card from './components/Card'
-
+import Modal from './components/Modal'
 
 function App() {
 const [content, setContent]  = useState<Content[]>()
 const [error, setError] = useState(false)
+const [modalOpen, setModalOpen] = useState(false)
 
   const requestContent = async ( ) => {
     const response = await ContentApi.get()
@@ -28,7 +29,6 @@ const [error, setError] = useState(false)
   }
 
   const handleSaveButtonClick = async (contentPiece?: Content) => {
-    console.log('in here', contentPiece)
     try {
       if (contentPiece) {
         await ContentApi.update(contentPiece)
@@ -43,6 +43,13 @@ const [error, setError] = useState(false)
     } catch {
       setError(true)
     }
+  }
+
+  const handleAddButtonClick = async (contentPiece?: Content) => {
+      if (contentPiece) {
+        await ContentApi.create(contentPiece)
+        console.log(contentPiece)
+      }
   }
 
   useEffect(() => {
@@ -61,6 +68,7 @@ const [error, setError] = useState(false)
 
   return (
     <div className="App">
+      <>
       {content?.map(c => 
         (<div style={{
           display: 'flex',
@@ -70,7 +78,15 @@ const [error, setError] = useState(false)
           padding: 4
         }} key={c.id}>
           <Card content={c} onSaveContent={handleSaveButtonClick} onCloseContent={() => {}} onDeleteContent={handleDeleteButtonClick}/>
-        </div>))}
+        </div>
+        ))
+      }
+      <button onClick={() => setModalOpen(true)} style={{backgroundColor: 'reds'}}>
+          ADD NEW CONTENT CLICK HERE
+        </button>
+      </>
+
+      {modalOpen && <Modal onAddContent={handleAddButtonClick} onClose={() => setModalOpen(false)}/>}
     </div>
   );
 }

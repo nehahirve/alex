@@ -4,7 +4,7 @@ import React, {  useState } from 'react';
 import {Content} from '../features/content/Content'
 
 interface CardInterface {
-    content: Content
+    content: Content 
     onDeleteContent: (content?: Content) => void 
     onSaveContent: (content: Content) => void 
     onCloseContent: () => void 
@@ -35,6 +35,7 @@ const Card = ({content, onDeleteContent, onSaveContent}: CardInterface) => {
       )
     }
   
+
     return (
       <>
         <h1>{title}</h1>

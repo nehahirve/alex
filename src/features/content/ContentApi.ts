@@ -28,7 +28,7 @@ class ContentApi {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(content);
-      }, 3000);
+      }, 4000);
     });
   };
 
